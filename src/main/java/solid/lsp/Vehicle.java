@@ -1,7 +1,9 @@
 package solid.lsp;
 
-public abstract class Vehicle {
+import java.util.ArrayList;
+import java.util.List;
 
+public abstract class Vehicle {
 
     private boolean engineStarted = false;
 
