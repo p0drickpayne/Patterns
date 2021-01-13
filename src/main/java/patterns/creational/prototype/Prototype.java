@@ -55,7 +55,7 @@ class AdressWithCountry extends Adress{
 
 class Person {
     String name;
-    int age;
+    private int age;
     Adress adress;  //Reference to an object
 
     public Person(String name, int age, Adress adress) {
@@ -69,6 +69,10 @@ class Person {
         //return new Person(this.name, this.age, this.adress);
         //Deep copy
         return new Person(this.name, this.age, this.adress.copy());
+    }
+
+    public static Person copyOf(Person prototype) {
+        return new Person(prototype.name, prototype.age, prototype.adress.copy());
     }
 
     @Override
@@ -94,6 +98,8 @@ public class Prototype {
 
         System.out.println(person);
         System.out.println(person2);
+
+        Person person3 = Person.copyOf(person);
 
 
     }
