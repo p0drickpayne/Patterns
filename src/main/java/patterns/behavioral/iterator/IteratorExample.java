@@ -2,6 +2,7 @@ package patterns.behavioral.iterator;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +53,7 @@ class MyIterableClass implements Iterable<Integer> {
     @NotNull
     @Override
     public Iterator<Integer> iterator() {
+        //return Arrays.stream(numbers).iterator();
         return new MyIterator(this);
     }
 }

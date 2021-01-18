@@ -19,12 +19,10 @@ class ShopTest {
     }
 
 
-
     @Test
     void payingFullPrice() {
         assertThat(shoppingCart.stream().mapToInt(ShoppingCartItem::quantity).sum()).isEqualTo(6);
         assertThat(shoppingCart.calculatePrice()).isEqualTo(BigDecimal.valueOf(73.93));
-
     }
 
     @Test
