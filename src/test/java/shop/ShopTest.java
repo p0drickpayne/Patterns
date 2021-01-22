@@ -26,6 +26,18 @@ class ShopTest {
     }
 
     @Test
+    void addCartItem(){
+        shoppingCart.addCartItem(new ShoppingCartItem(new Product("Milk"), 20, 1));
+        assertThat(shoppingCart.stream().mapToInt(ShoppingCartItem::quantity).sum()).isEqualTo(7);
+    }
+
+    /*@Test
+    void removeLastCartItem(){
+        shoppingCart.undo(new ShoppingCartItem(new Product("Milk"), 20, 1));
+        assertThat(shoppingCart.stream().mapToInt(ShoppingCartItem::quantity).sum()).isEqualTo(6);
+    }*/
+
+    @Test
     void createReceiptReturnsTextStringWithAllProducts(){
         assertThat(shoppingCart.receipt()).isEqualTo("""
                 --------------------------------

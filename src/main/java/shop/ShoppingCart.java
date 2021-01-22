@@ -29,8 +29,9 @@ public class ShoppingCart {
         return sum;
     }
 
-    public void undo(){
+    public void undo(ShoppingCartItem item){
         //Undo the latest change to the ShoppingCart
+        items.remove(item);
     }
 
 
