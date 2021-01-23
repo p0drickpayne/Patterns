@@ -1,9 +1,12 @@
 package shop;
 
+import shop.rabatt.*;
+import shop.kontrollZ.HistoriaHog;
+import shop.kontrollZ.HistoriaState;
+
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,32 +17,54 @@ public class ShoppingCart {
 
     public void addCartItem(ShoppingCartItem item){
         items.add(item);
+        addToStack(item);
+    }
+    public void addToStack(ShoppingCartItem item) {
+        HistoriaHog.addState(new HistoriaState(() -> {
+            items.remove(item);
+        }, () -> {
+            items.add(item);
+        }));
     }
 
     public Stream<ShoppingCartItem> stream(){
         return items.stream();
     }
 
-    public BigDecimal calculatePrice(){
-        var sum = BigDecimal.ZERO;
+    public Kvitto calculatePrice(){
+        System.out.println("calculateprice");
+        Rabatt rabatt = new Rabatt(items);
+        StrategiMonster bastaRabatt = rabatt.bastaRabatt();
+        BigDecimal addedDiscount = rabatt.kollaRabatt(bastaRabatt);
+        System.out.println("calculateprice");
+        Kvitto kvitto = new Kvitto(addedDiscount, rabatt.getName(), rabatt.getDiscount());
+        System.out.println("calculateprice");
+        return kvitto;
+    }
 
-        for (var item: items) {
-            sum = item.itemCost().multiply(BigDecimal.valueOf(item.quantity())).add(sum);
+
+    public class Kvitto {
+        BigDecimal summa = BigDecimal.ZERO;
+        String namn;
+        String rabatt;
+
+        public Kvitto(BigDecimal summa, String namn, String rabatt){
+            this.summa = summa;
+            this.namn = namn;
+            this.rabatt = rabatt;
         }
-        return sum;
     }
 
-    public void undo(ShoppingCartItem item){
-        //Undo the latest change to the ShoppingCart
-        items.remove(item);
+    public void backa(HistoriaHog hog){
+        hog.backa();
     }
 
-
-    public void redo(){
-        //Redo the latest change to the ShoppingCart
+    public void framat(HistoriaHog hog){
+        hog.framat();
     }
 
     public String receipt() {
+        System.out.println("reciept");
         String line = "--------------------------------\n";
         StringBuilder sb = new StringBuilder();
         sb.append(line);
@@ -47,10 +72,16 @@ public class ShoppingCart {
                 .sorted(Comparator.comparing(item -> item.product().name()))
                 .collect(Collectors.toList());
         for (var each : list) {
-            sb.append(String.format("%-24s % 7.2f\n", each.product().name(), each.itemCost()));
+            sb.append(String.format("%-4s %-18s % 8.2f\n",  each.quantity() + "x", each.product().name(), each.itemCost()));
         }
         sb.append(line);
-        sb.append(String.format("%24s% 8.2f", "TOTAL:", calculatePrice()));
+
+        if(calculatePrice().namn != "") {
+            sb.append(String.format("%-24s %7s \n", calculatePrice().namn, calculatePrice().rabatt));
+        }
+
+        sb.append(String.format("%24s% 8.2f", "TOTAL:", calculatePrice().summa));
         return sb.toString();
     }
 }
+

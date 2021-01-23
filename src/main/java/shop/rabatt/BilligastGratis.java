@@ -4,6 +4,7 @@ import shop.ShoppingCartItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class BilligastGratis implements StrategiMonster {
 
@@ -11,7 +12,7 @@ public class BilligastGratis implements StrategiMonster {
     double lagst = 0;
 
     @Override
-    public BigDecimal rabatt(ArrayList<ShoppingCartItem> items) {
+    public BigDecimal rabatt(Set<ShoppingCartItem> items) {
         var summa = BigDecimal.ZERO;
         for(var item: items) {
             if(items.size() > 3 && lagst == 0 || item.itemCost().doubleValue() < lagst) {

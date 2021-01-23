@@ -4,10 +4,11 @@ import shop.ShoppingCartItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class IngenRabatt implements StrategiMonster {
     @Override
-    public BigDecimal rabatt(ArrayList<ShoppingCartItem> items) {
+    public BigDecimal rabatt(Set<ShoppingCartItem> items) {
         var sum = BigDecimal.ZERO;
 
         for (var item: items) {

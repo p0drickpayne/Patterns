@@ -4,13 +4,14 @@ import shop.ShoppingCartItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class TioProcentRabatt implements StrategiMonster {
 
     String rabatt;
 
     @Override
-    public BigDecimal rabatt(ArrayList<ShoppingCartItem> items) {
+    public BigDecimal rabatt(Set<ShoppingCartItem> items) {
         var summo = BigDecimal.ZERO;
         var allaVaror = BigDecimal.ZERO;
 

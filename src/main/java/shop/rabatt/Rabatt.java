@@ -4,17 +4,19 @@ import shop.ShoppingCartItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Rabatt {
     private StrategiMonster strategiMonster;
 
-    public ArrayList<ShoppingCartItem> items = new ArrayList<>();
+    public Set<ShoppingCartItem> items = new HashSet<>();
 
     //public Discount(DiscountInterface discountInterface) {
        // this.discountInterface = discountInterface;
     //}
 
-    public Rabatt(ArrayList<ShoppingCartItem> shoppingCart) {
+    public Rabatt(Set<ShoppingCartItem> shoppingCart) {
         this.items = shoppingCart;
     }
 
@@ -25,7 +27,7 @@ public class Rabatt {
         return summa;
     }
 
-    public StrategiMonster bestDiscount() {
+    public StrategiMonster bastaRabatt() {
         StrategiMonster nuvarandeRabatt = new IngenRabatt();
 
         ArrayList<StrategiMonster> arr = new ArrayList<StrategiMonster>();

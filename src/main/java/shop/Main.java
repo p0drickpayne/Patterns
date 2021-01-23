@@ -1,5 +1,7 @@
 package shop;
 
+import shop.kontrollZ.HistoriaHog;
+
 public class Main {
     public static void main(String[] args) {
         ShoppingCart cart = new ShoppingCart();
@@ -23,8 +25,19 @@ public class Main {
         cart.addCartItem(shoppingCartItem4);
         cart.addCartItem(shoppingCartItem5);
 
+        HistoriaHog stack = new HistoriaHog();
+
+        cart.backa(stack);
+        cart.framat(stack);
+        cart.backa(stack);
+        cart.backa(stack);
+        cart.backa(stack);
+
         // Change quantity
-        shoppingCartItem1.setQuantity(5);
+        shoppingCartItem1.setQuantity(3);
+
+        cart.backa(stack);
+        cart.framat(stack);
 
         // Print receipt
         System.out.println(cart.receipt());
