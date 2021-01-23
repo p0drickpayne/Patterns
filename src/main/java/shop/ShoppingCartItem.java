@@ -1,15 +1,16 @@
 package shop;
 
-import org.jetbrains.annotations.NotNull;
+import shop.kontrollZ.HistoriaHog;
+import shop.kontrollZ.HistoriaState;
 
 import java.math.BigDecimal;
 
 public class ShoppingCartItem {
     private final BigDecimal itemCost;
     private final Product product;
-    private final int quantity;
+    private int quantity;
 
-    public ShoppingCartItem(@NotNull Product product, double itemCost, int quantity) {
+    public ShoppingCartItem(Product product, double itemCost, int quantity) {
         this.itemCost = BigDecimal.valueOf(itemCost);
         this.product = product;
         this.quantity = quantity;
@@ -25,6 +26,18 @@ public class ShoppingCartItem {
 
     public BigDecimal itemCost() {
         return itemCost;
+    }
+
+    public void setQuantity(int newQuantity) {
+        int prevQuantity = this.quantity;
+
+        HistoriaHog.addState(new HistoriaState(() -> {
+            this.quantity = prevQuantity;
+        }, () -> {
+            this.quantity = newQuantity;
+        }));
+
+        this.quantity = newQuantity;
     }
 
     @Override

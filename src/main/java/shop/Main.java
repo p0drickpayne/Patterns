@@ -23,6 +23,9 @@ public class Main {
         cart.addCartItem(shoppingCartItem4);
         cart.addCartItem(shoppingCartItem5);
 
+        // Change quantity
+        shoppingCartItem1.setQuantity(5);
+
         // Print receipt
         System.out.println(cart.receipt());
 
